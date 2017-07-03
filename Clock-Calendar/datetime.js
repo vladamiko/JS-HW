@@ -12,13 +12,13 @@ function DateTime () {
         return {hours: hours, minutes: minutes, seconds: seconds};
     };
 
-    this.getCurrentTimeShort = function () {
+    this.getTimeShort = function () {
         let currentTime = this.getCurrentTime();
         
         return `${currentTime.hours}:${currentTime.minutes}`;
     };
 
-    this.getCurrentTimeFull = function () {
+    this.getTimeFull = function () {
         let currentTime = this.getCurrentTime();
         
         return `${currentTime.hours}:${currentTime.minutes}:${currentTime.seconds}`;
@@ -36,19 +36,23 @@ function DateTime () {
         return {date: date, month: month, year: year, fullYear: fullYear};
     };
 
-    this.getCurrentDateEU = function () {
+    this.getDateEU = function () {
         let currentDate = this.getCurrentDate();
 
         return `${currentDate.month}/${currentDate.date}/${currentDate.year}`;
-    }
+    };
 
-    this.getCurrentDateUA = function () {
+    this.getDateUA = function () {
         let currentDate = this.getCurrentDate();
 
         return `${currentDate.date}.${currentDate.month}.${currentDate.fullYear}`;
-    }
+    };
 
     this.normalizeDateTime = function (value) {
         return value >= 10? String(value): `0${value}`;
+    };
+
+    this.start = function (refresh) {
+        setInterval(() => refresh(), 1000);
     };
 }
