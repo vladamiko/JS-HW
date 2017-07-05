@@ -1,8 +1,12 @@
 'use strict';
 
 class Hamster extends Pet {
-    constructor (color, price) {
+    constructor (color, price, isFluffy) {
         super(color, price);
-        this.isFluffy = true;
+        this.isFluffy = isFluffy;
+    }
+
+    areYouFluffy () {
+        return this.isFluffy;
     }
 }

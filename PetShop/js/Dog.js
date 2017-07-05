@@ -5,4 +5,8 @@ class Dog extends Pet {
         super(color, price);
         this.name = name;
     }
+
+    getName () {
+        return this.name;
+    }
 }

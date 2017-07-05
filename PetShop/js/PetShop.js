@@ -3,64 +3,66 @@
 class PetShop {
     constructor () {
         this.petSet = new Set();
-        this.addPetsSet(); //можно ли здесь вызывать?
+        this.addPetSet(); //можно ли здесь вызывать?
     }
 
-    addPetsSet () {
-        this.petSet.add(new Cat('Kusia', 'grey', 500));
-        this.petSet.add(new Cat('Busia', 'white', 700));
-        this.petSet.add(new Cat('Musia', 'black', 300));
+    addPetSet () {
+        this.petSet.add(new Cat('Kusia', 'grey', 500, true));
+        this.petSet.add(new Cat('Busia', 'white', 700, false));
+        this.petSet.add(new Cat('Musia', 'black', 300, true));
         this.petSet.add(new Dog('Bim', 'black', 600));
         this.petSet.add(new Dog('Kim', 'white', 400));
         this.petSet.add(new Dog('Jim', 'ginger', 700));
-        this.petSet.add(new Hamster('white', 200));
-        this.petSet.add(new Hamster('ginger', 100));
-        this.petSet.add(new Hamster('grey', 300));
+        this.petSet.add(new Hamster('white', 200, true));
+        this.petSet.add(new Hamster('ginger', 100, false));
+        this.petSet.add(new Hamster('grey', 300, true));
     }
 
-    getCatsList () {
-        let catsList = [];
+    getCatList () {
+        let catList = [];
 
         this.petSet.forEach((value, key, set) => {
             if (value instanceof Cat) {
-                catsList.push(value);
+                catList.push(value);
             }
         });
 
-        return catsList;
+        return catList;
     }
 
-    getExpensivePetsList () {
-        let petsList = [],
+    getExpensivePetList () {
+        let petList = [],
             avPrice = 0,
             sumPrice = 0;
 
         this.petSet.forEach((value, key, set) => {
-            sumPrice = sumPrice + value.price;
+            sumPrice += value.getPrice();
         });
 
         avPrice = sumPrice/this.petSet.size;
 
         this.petSet.forEach((value, key, set) => {
-            if (value.price > avPrice) {
-                petsList.push(value);
+            if (value.getPrice() > avPrice) {
+                petList.push(value);
             }
         });
 
-        return petsList;
+        return petList;
     }
 
     getFluffyOrWhite () {
-        let petsList = [];
+        let petList = [];
 
         this.petSet.forEach((value, key, set) => {
-            let fluffyOrWhite = value.isFluffy || value.color === 'white';
-
-            if (fluffyOrWhite) {
-                petsList.push(value);
-            }
+            if (value.areYouFluffy) {
+                if (value.areYouFluffy() || value.isYourColor('white')) {
+                    petList.push(value);
+                }
+            } else if (value.isYourColor('white')) {
+                petList.push(value);
+            }    
         });
 
-        return petsList;
+        return petList;
     }
 }
