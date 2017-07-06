@@ -17,4 +17,16 @@ class Pet {
     isYourColor (_color) {
         return this.color === _color;
     }
+
+    getName () {
+        return undefined;
+    }
+
+    areYouFluffy () {
+        return undefined;
+    }
+
+    isFluffyOrWhite () {
+        return this.isYourColor('white') || this.areYouFluffy();
+    }
 }

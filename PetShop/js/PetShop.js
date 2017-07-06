@@ -3,7 +3,7 @@
 class PetShop {
     constructor () {
         this.petSet = new Set();
-        this.addPetSet(); //можно ли здесь вызывать?
+        this.addPetSet(); //можно ли здесь вызывать? +
     }
 
     addPetSet () {
@@ -54,13 +54,9 @@ class PetShop {
         let petList = [];
 
         this.petSet.forEach((value, key, set) => {
-            if (value.areYouFluffy) {
-                if (value.areYouFluffy() || value.isYourColor('white')) {
-                    petList.push(value);
-                }
-            } else if (value.isYourColor('white')) {
+            if (value.isFluffyOrWhite()) {
                 petList.push(value);
-            }    
+            }
         });
 
         return petList;

@@ -20,7 +20,7 @@ class PetShopView {
             petItem = '';
 
         petList.forEach((value) => {
-            petItem += value.getName? `<li>${value.getName()}</li>`: `<li>hamster</li>`;
+            petItem += value.getName()? `<li>${value.getName()}</li>`: `<li>hamster</li>`;
         });
 
         div.innerHTML += this.getTpl(petItem, listName);
