@@ -1,13 +1,12 @@
 'use strict';
 
-document.addEventListener('DOMContentLoaded', init, false);
+window.onload = function () {
+    init();
+}
 
 function init () {
     let el = document.registerElement('clock-calendar', ClockCalendar),
-        widget = document.createElement('clock-calendar');
-
-    widget.setAttribute('id', 'clock-calendar');
-    document.querySelector('body').appendChild(widget);
+        widget = document.querySelector('clock-calendar');
 
     widget.showTime();
     
@@ -15,5 +14,3 @@ function init () {
     widget.changeFormatEvent();
     widget.switchInfoEvent();
 }
-
-
