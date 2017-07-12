@@ -27,23 +27,30 @@ class ClockCalendar extends HTMLElement {
     }
 
     changeFormatEvent () {
-        this.addEventListener('click', () => this.changeFormat(), false);
+        this.addEventListener('click', () => this.changeFormat(this.currentState), false);
     }
 
-    changeFormat () {
-        if (this.currentState === 'short') {
-            this.currentState = 'full';
-            this.root.innerHTML = this.dateTime.getTimeFull();
-        } else if (this.currentState === 'full') {
-            this.currentState = 'short';
-            this.root.innerHTML = this.dateTime.getTimeShort();
-        } else if (this.currentState === 'ua') {
-            this.currentState = 'eu';
-            this.root.innerHTML = this.dateTime.getDateEU();
-        } else if (this.currentState === 'eu') {
-            this.currentState = 'ua';
-            this.root.innerHTML = this.dateTime.getDateUA();
-        }
+    changeFormat (state) {
+        let obj = {
+            short: () => {
+                this.currentState = 'full';
+                this.root.innerHTML = this.dateTime.getTimeFull();
+            },
+            full: () => {
+                this.currentState = 'short';
+                this.root.innerHTML = this.dateTime.getTimeShort(); 
+            },
+            ua: () => {
+                this.currentState = 'eu';
+                this.root.innerHTML = this.dateTime.getDateEU();
+            },
+            eu: () => {
+                this.currentState = 'ua';
+                this.root.innerHTML = this.dateTime.getDateUA();
+            }
+        };
+
+        return obj[state]();
     }
 
     switchInfoEvent () {
@@ -63,28 +70,30 @@ class ClockCalendar extends HTMLElement {
         }
     }
 
+    strategy (state) {
+        let obj = {
+            short: () => {
+                this.currentTime = this.dateTime.getTimeShort();
+                this.root.innerHTML = this.dateTime.getTimeShort();
+            },
+            full: () => {
+                this.currentTime = this.dateTime.getTimeFull();
+                this.root.innerHTML = this.dateTime.getTimeFull(); 
+            },
+            ua: () => {
+                this.currentTime = this.dateTime.getDateUA();
+                this.root.innerHTML = this.dateTime.getDateUA();
+            },
+            eu: () => {
+                this.currentTime = this.dateTime.getDateEU();
+                this.root.innerHTML = this.dateTime.getDateEU();
+            }
+        };
+
+        return obj[state]();
+    }
+
     refresh () {
-        let shortTime = this.currentState === 'short' 
-            && this.currentTime !== this.dateTime.getTimeShort(),
-            fullTime = this.currentState === 'full' 
-            && this.currentTime !== this.dateTime.getTimeFull(),
-            uaDate = this.currentState === 'ua' 
-            && this.currentTime !== this.dateTime.getDateUA(),
-            euDate = this.currentState === 'eu' 
-            && this.currentTime !== this.dateTime.getDateEU();
-        
-        if (shortTime) {
-            this.root.innerHTML = this.dateTime.getTimeShort();
-            this.currentTime = this.dateTime.getTimeShort();
-        } else if (fullTime) {
-            this.root.innerHTML = this.dateTime.getTimeFull();
-            this.currentTime = this.dateTime.getTimeFull();
-        } else if (uaDate) {
-            this.root.innerHTML = this.dateTime.getDateUA();
-            this.currentTime = this.dateTime.getDateUA();
-        } else if (euDate) {
-            this.root.innerHTML = this.dateTime.getDateEU();
-            this.currentTime = this.dateTime.getDateEU();
-        }
+        this.strategy(this.currentState);
     }
 }
