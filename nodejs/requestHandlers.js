@@ -1,7 +1,6 @@
 'use strict';
 
-let exec = require("child_process").exec,
-    fs = require("fs"),
+let fs = require("fs"),
     currentTime = getCurrentTime(),
     currentDate = getCurrentDate();
 
@@ -54,33 +53,18 @@ function normalizeDateTime (value) {
 
 function index (response) {
     console.log("Request handler 'index' was called.");
-    let mimeTypes = {
-        '.html': 'text/html',
-        '.js': 'text/javascript',
-        '.css': 'text/css',
-        '.json': 'application/json',
-        '.png': 'image/png',
-        '.jpg': 'image/jpg',
-        '.ico': 'text/plain'
-    };
 
-    let contentType = defineMimeType(mimeTypes);
-
-    fs.readFile("index.html", "binary", function(error, file) {
+    fs.readFile("index.html", function(error, file) {
         if (error) {
             response.writeHead(500, {"Content-Type": "text/plain"});
             response.write(error + "\n");
             response.end();
         } else {
-            response.writeHead(200, {"Content-Type": contentType});
+            response.writeHead(200, {"Content-Type": 'text/html'});
             response.write(file)
             response.end();
         }
     });
-
-    function defineMimeType (extname) {
-        return mimeTypes[extname];
-    }
 }
 
 exports.helloWorld = helloWorld;
